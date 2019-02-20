@@ -124,7 +124,7 @@
                 }
                 
                 setFocusOnFirstLink(popup){
-                    popup.querySelector('a').focus()
+                    popup.querySelector('.js-mega-menu-link').focus()
                 }
 
                 setFocus( direction ) {
@@ -135,7 +135,7 @@
                     const parentLi = link.closest('li')
                     const nextLi = direction === 'previous' ? parentLi.previousElementSibling :  parentLi.nextElementSibling
                     if(nextLi){
-                        nextLi.querySelector('a').focus()
+                        nextLi.querySelector('.js-mega-menu-link').focus()
                     }
                     else{
                         if( direction === 'previous' ) {
@@ -159,10 +159,10 @@
                         if( startingPoint === 'last') {
                             const lis = nextUl.querySelectorAll('li')
                             const lastLi = lis[lis.length -1]
-                            lastLi.querySelector('a').focus()
+                            lastLi.querySelector('.js-mega-menu-link').focus()
                         }
                         else{
-                            nextUl.querySelector('li a').focus()
+                            nextUl.querySelector('li .js-mega-menu-link').focus()
                         }
                     }
                 }
@@ -261,25 +261,25 @@
                     <div class="mega-menu-popup" id="mega-menu-popup-1">
                         <ul role="menu">
                             <li class="mega-menu__item" role="menuitem">
-                                <a class="mega-menu__link" tabindex="-1" href="#">Item 1</a>
+                                <a class="js-mega-menu-link" tabindex="-1" href="#">Item 1</a>
                             </li>
                             <li class="mega-menu__item" role="menuitem">
-                                <a class="mega-menu__link" tabindex="-1" href="#">Item 2</a>
+                                <a class="js-mega-menu-link" tabindex="-1" href="#">Item 2</a>
                             </li>
                             <li class="mega-menu__item" role="menuitem">
-                                <a class="mega-menu__link" tabindex="-1" href="#">Item 3</a>
+                                <a class="js-mega-menu-link" tabindex="-1" href="#">Item 3</a>
                             </li>
                         </ul>
 
                         <ul role="menu">
                             <li class="mega-menu__item" role="menuitem">
-                                <a class="mega-menu__link" tabindex="-1" href="#">Item 4</a>
+                                <a class="js-mega-menu-link" tabindex="-1" href="#">Item 4</a>
                             </li>
                             <li class="mega-menu__item" role="menuitem">
-                                <a class="mega-menu__link" tabindex="-1" href="#">Item 5</a>
+                                <a class="js-mega-menu-link" tabindex="-1" href="#">Item 5</a>
                             </li>
                             <li class="mega-menu__item" role="menuitem">
-                                <a class="mega-menu__link" tabindex="-1" href="#">Item 6</a>
+                                <a class="js-mega-menu-link" tabindex="-1" href="#">Item 6</a>
                             </li>
                         </ul>
                         
@@ -290,25 +290,25 @@
                     <div class="mega-menu-popup" id="mega-menu-popup-2">
                         <ul role="menu">
                             <li class="mega-menu__item" role="menuitem">
-                                <a class="mega-menu__link" tabindex="-1" href="#">Item A</a>
+                                <a class="js-mega-menu-link" tabindex="-1" href="#">Item A</a>
                             </li>
                             <li class="mega-menu__item" role="menuitem">
-                                <a class="mega-menu__link" tabindex="-1" href="#">Item B</a>
+                                <a class="js-mega-menu-link" tabindex="-1" href="#">Item B</a>
                             </li>
                             <li class="mega-menu__item" role="menuitem">
-                                <a class="mega-menu__link" tabindex="-1" href="#">Item C</a>
+                                <a class="js-mega-menu-link" tabindex="-1" href="#">Item C</a>
                             </li>
                         </ul>
 
                         <ul role="menu">
                             <li class="mega-menu__item" role="menuitem">
-                                <a class="mega-menu__link" tabindex="-1" href="#">Item D</a>
+                                <a class="js-mega-menu-link" tabindex="-1" href="#">Item D</a>
                             </li>
                             <li class="mega-menu__item" role="menuitem">
-                                <a class="mega-menu__link" tabindex="-1" href="#">Item E</a>
+                                <a class="js-mega-menu-link" tabindex="-1" href="#">Item E</a>
                             </li>
                             <li class="mega-menu__item" role="menuitem">
-                                <a class="mega-menu__link" tabindex="-1" href="#">Item F</a>
+                                <a class="js-mega-menu-link" tabindex="-1" href="#">Item F</a>
                             </li>
                         </ul>
                         
