@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Application Menu - Example</title>
+        
+
+        <style>
+            
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0 0 24px 0;
+            }
+            li {
+                margin-bottom: 6px;
+            }
+
+            button {
+                border-radius: 0;
+                background-color: #666;
+                color: #fff;
+                padding: 12px;
+            }
+
+            a {
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .mega-menu-body {
+                padding: 24px;
+                background: #5b007d;
+                color: white;
+                display: none;
+            }
+
+            .mega-menu-body-open{
+                display: block;
+            }
+
+        </style>
+
+        <script>
+
+            class MegaMenu {
+                constructor(header, body) {
+                    this.header = header;
+                    this.buttons = menu.querySelectorAll('.mega-menu__button')
+                    this.bindButtonsClick()
+                    this.bindDocumentClick()
+                    this.bindKeyPress()
+                }
+                
+                // Closes menu if click outside it.
+                onDocumentClick( event ) {
+                    const target = event.target                    
+                    if (this.header !== target && !this.header.contains(target)) {
+                        this.setExpandAll(false)
+                        this.closeAll()
+                    }
+                }
+
+                onKeyUp() {
+                    console.log('keyUp()');
+                    this.setFocus('previous')  
+                }
+
+                onKeyDown() {
+                    console.log('keydDown()'); 
+                    this.setFocus('next')  
+                    this.ensureFocus()
+                }
+
+                onKeyRight() {
+                    console.log('keydRight()');   
+                    this.setFocusGroup('next')
+                }
+
+                onKeyLeft() {
+                    console.log('keydLeft()');   
+                    this.setFocusGroup('previous')
+                }
+
+                onKeyEsc() {
+                    console.log('keyEsc()');   
+                    this.setExpandAll(false)
+                    this.closeAll()
+                }
+
+                getExpandedButton() {
+                    
+                    return Array.from(this.buttons).filter( button => button.getAttribute('aria-expanded') === 'true')[0]
+                }
+
+                getPopup(button) {
+                    const item = button.closest('li')
+                    const popup = item.querySelector('.mega-menu-body')
+                    return popup
+                }
+
+                getFocusedLink(){
+                    const focusedElement = document.activeElement
+                    // might need to check if the links is inside the mega menu as well. 
+                    if(this.isElement(focusedElement, 'a')){
+                        return focusedElement
+                    }
+                }
+
+                setExpanded(button, value) {
+                    button.setAttribute('aria-expanded', value)
+                }
+
+                setExpandAll(value) {
+                    this.buttons.forEach( button => {
+                        this.setExpanded(button, value)
+                    })
+                }
+
+                ensureFocus() {
+                    const link = this.getFocusedLink()
+                    if(!link){
+                        const button = this.getExpandedButton()
+                        const popup = this.getPopup(button)
+                        this.setFocusOnFirstLink(popup)
+                    }
+                }
+                
+                setFocusOnFirstLink(popup){
+                    popup.querySelector('a').focus()
+                }
+
+                setFocus( direction ) {
+                    const link = this.getFocusedLink()
+                    if(!link){
+                        return
+                    }
+                    const parentLi = link.closest('li')
+                    // const nextLi = parentLi.nextElementSibling
+                    const nextLi = direction === 'previous' ? parentLi.previousElementSibling :  parentLi.nextElementSibling
+                    if(nextLi){
+                        nextLi.querySelector('a').focus()
+                    }
+                    else{
+                        if( direction === 'previous' ) {
+                            this.setFocusGroup('previous', 'last')
+                        }
+                        else{
+                            this.setFocusGroup('next')
+                        }
+                    }
+                }
+                
+                setFocusGroup( direction, startingPoint ) {
+                    const link = this.getFocusedLink()
+                    if(!link){
+                        return
+                    }
+                    const parentUl = link.closest('ul')
+                    
+                    const nextUl = direction === 'previous' ? parentUl.previousElementSibling :  parentUl.nextElementSibling
+                    if(nextUl){
+                        if( startingPoint === 'last') {
+                            const lis = nextUl.querySelectorAll('li')
+                            const lastLi = lis[lis.length -1]
+                            lastLi.querySelector('a').focus()
+                        }
+                        else{
+                            nextUl.querySelector('li a').focus()
+                        }
+                    }
+                }
+
+                isElement(el, value) {
+                    return el.nodeName.toLocaleLowerCase() === value
+                }
+
+                onButtonClick( event ) {
+                    console.log('onButtonClick()');
+                    const button = event.target
+                    const isPressed = button.getAttribute('aria-expanded') === 'true';
+                    const isOtherPressed = !!Array.from(this.buttons).filter( b => b.getAttribute('aria-expanded') === 'true').length
+                    const popup = this.getPopup(button)
+                    
+                    this.setExpandAll(false)
+                    this.closeAll()
+                    
+                    if(!isPressed){
+                        this.setExpanded(button, true)
+                        this.open(popup)
+                        this.setFocusOnFirstLink(popup)
+                    }
+                }
+                
+                // Automatically close menus when the user clicks away.
+                bindDocumentClick() {
+                    console.log('bindDocumentClick()');
+                    document.addEventListener( 'click', this.onDocumentClick.bind(this) );
+                }
+
+                bindButtonsClick(button) {
+                    this.buttons.forEach( button => {
+                        button.addEventListener( 'click', this.onButtonClick.bind(this) );
+                    })
+                }
+
+                bindKeyPress(){
+                    document.addEventListener("keydown", function(event) {
+                        console.log('event.keyCode', event.keyCode);
+                        const key = event.which || event.keyCode || 0;
+                    
+                        switch (key) {
+                            case 38:
+                                this.onKeyUp()
+                                break
+                            case 40:
+                                this.onKeyDown()
+                                break
+                            case 39:
+                                this.onKeyRight()
+                                break
+                            case 37:
+                                this.onKeyLeft()
+                                break
+                            case 27: 
+                                this.onKeyEsc()
+                                break
+                        }
+                    }.bind(this))
+                }
+
+                open(popup) {
+                    console.log('open()');
+                    popup.classList.add('mega-menu-body-open')
+                }
+
+                close(popup) {
+                    console.log('close()');
+                    popup.classList.remove('mega-menu-body-open')
+                }
+
+                closeAll() {
+                    console.log('closeAll()');
+                    this.buttons.forEach( button => {
+                        const popup = this.getPopup(button)
+                        this.close(popup)
+                    })
+                }
+            }
+
+            function init() {
+                const menuHeader = document.querySelector('.mega-menu-header');
+                new MegaMenu(menuHeader)
+            }
+
+            document.addEventListener('DOMContentLoaded', function(event) {
+                init();
+            })
+
+        </script>
+
+
+    </head>
+    <body>
+        <nav class="mega-menu-header">
+            <ul>
+                <li>
+                    <button class="mega-menu__button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="mega-menu-body-1">Menu 1</button>
+                    <div class="mega-menu-body" id="mega-menu-body-1">
+                        <ul role="menu">
+                            <li class="mega-menu__item" role="menuitem">
+                                <a class="mega-menu__link" tabindex="-1" href="#">Item 1</a>
+                            </li>
+                            <li class="mega-menu__item" role="menuitem">
+                                <a class="mega-menu__link" tabindex="-1" href="#">Item 2</a>
+                            </li>
+                            <li class="mega-menu__item" role="menuitem">
+                                <a class="mega-menu__link" tabindex="-1" href="#">Item 3</a>
+                            </li>
+                        </ul>
+
+                        <ul role="menu">
+                            <li class="mega-menu__item" role="menuitem">
+                                <a class="mega-menu__link" tabindex="-1" href="#">Item 1</a>
+                            </li>
+                            <li class="mega-menu__item" role="menuitem">
+                                <a class="mega-menu__link" tabindex="-1" href="#">Item 2</a>
+                            </li>
+                            <li class="mega-menu__item" role="menuitem">
+                                <a class="mega-menu__link" tabindex="-1" href="#">Item 3</a>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </li>
+                <li>
+                    <button class="mega-menu__button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="menu-2">Menu 2</button>
+                    <div class="mega-menu-body">
+                        <ul id="menu-2" role="menu">
+                            <li class="mega-menu__item" role="menuitem">
+                                <a class="mega-menu__link" tabindex="-1" href="#">Item A</a>
+                            </li>
+                            <li class="mega-menu__item" role="menuitem">
+                                <a class="mega-menu__link" tabindex="-1" href="#">Item B</a>
+                            </li>
+                            <li class="mega-menu__item" role="menuitem">
+                                <a class="mega-menu__link" tabindex="-1" href="#">Item C</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            
+        </nav>
+
+
+        <script>
+            // Custom behaviour.
+            var menu = document.querySelector('.mega-menu-header');
+            menu.addEventListener('press.mega-menu', function () {
+                console.log('Menu button pressed');
+            });
+            menu.addEventListener('unpress.mega-menu', function () {
+                console.log('Menu button unpressed');
+            });
+            menu.addEventListener('expand.mega-menu', function () {
+                console.log('Menu expanded');
+            });
+            menu.addEventListener('contract.mega-menu', function () {
+                console.log('Menu contracted');
+            });
+            menu.addEventListener('open.mega-menu', function () {
+                console.log('Menu opened');
+            });
+            menu.addEventListener('close.mega-menu', function () {
+                console.log('Menu closed');
+            });
+        </script>
+    </body>
+</html>
