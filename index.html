@@ -6,32 +6,61 @@
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <title>Accessible Mega Menu</title>
         
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
         <style>
             
             ul {
                 list-style: none;
                 padding: 0;
-                margin: 0 0 24px 0;
+                margin: 0 0 24px 0 !important; 
             }
 
             li {
                 margin-bottom: 6px;
             }
 
-            button {
-                border-radius: 0;
-                background-color: #666;
-                color: #fff;
-                padding: 12px;
-            }
+            
 
             a {
                 color: #fff;
                 text-decoration: none;
             }
 
+            .mega-menu {
+
+            }
+
+            .mega-menu-list {
+                display: flex;
+            }
+
+            .mega-menu-list-item:not(:last-child) {
+                margin-right: 24px;
+            }
+
+            .mega-menu-button {
+                border-radius: 0;
+                background-color: #666;
+                color: #fff;
+                padding: 12px;
+            }
+
+            .mega-menu-button[aria-expanded="true"] {
+                background-color: #fff;
+                color: #666;
+            }
+
+            .mega-menu a:focus {
+                outline: 2px solid red !important;
+            }
+
             .mega-menu-popup {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                transform: translateY(100%);
                 padding: 24px;
                 background: #5b007d;
                 color: white;
@@ -49,7 +78,7 @@
             class MegaMenu {
                 constructor(container) {
                     this.container = container;
-                    this.buttons = container.querySelectorAll('.mega-menu__button')
+                    this.buttons = container.querySelectorAll('.mega-menu-button')
                     this.bindButtonsClick()
                     this.bindDocumentClick()
                     this.bindKeyPress()
@@ -262,11 +291,153 @@
 
 
     </head>
+
     <body>
-        <nav class="mega-menu">
+
+
+        <style>
+            .bg-1 {
+                background-color: red;
+            }
+            .bg-2 {
+                background-color: blue;
+            }
+            .bg-3 {
+                background-color: green;
+            }
+            .bg-4 {
+                background-color: purple;
+            }
+            .bg-5 {
+                background-color: pink;
+            }
+            .bg-6 {
+                background-color: bisque;
+            }
+
+            .header{
+                position: relative;
+            }
+
+            
+            @media (max-width: 800px) {
+                .header-nav {
+                    border: 4px solid red;
+                    position: fixed;
+                    width: 100vw;
+                    max-width: 200px;
+                    right: 0;
+                    transform: translateX(100%);
+                    transition: 300ms transform ease;
+                }
+                .header-nav-open {
+                    transform: translateX(0);
+                    transition: 300ms transform ease;
+                }
+            }
+
+        </style>
+
+        <div class="container header bg-5">
+            <div class="row">
+                <div class="col-3 bg-1">
+                    <div class="bg-6">
+                        Logo
+                    </div>
+                </div>
+                <div class="col-9 bg-2 position-static">
+                    <div class="header-nav js-header-nav">
+                        <div class="mb-12 bg-3">
+                            Small links
+                        </div>
+                        <div class="mb-12 bg-4">
+                            <nav class="mega-menu">
+                                <ul class="mega-menu-list">
+                                    <li class="mega-menu-list-item">
+                                        <button class="mega-menu-button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="mega-menu-popup-1">Menu 1</button>
+                                        <div class="mega-menu-popup" id="mega-menu-popup-1">
+                                            <ul role="menu">
+                                                <li class="mega-menu__item" role="menuitem">
+                                                    <a class="js-mega-menu-link" tabindex="-1" href="#">Item 1</a>
+                                                </li>
+                                                <li class="mega-menu__item" role="menuitem">
+                                                    <a class="js-mega-menu-link" tabindex="-1" href="#">Item 2</a>
+                                                </li>
+                                                <li class="mega-menu__item" role="menuitem">
+                                                    <a class="js-mega-menu-link" tabindex="-1" href="#">Item 3</a>
+                                                </li>
+                                            </ul>
+                    
+                                            <ul role="menu">
+                                                <li class="mega-menu__item" role="menuitem">
+                                                    <a class="js-mega-menu-link" tabindex="-1" href="#">Item 4</a>
+                                                </li>
+                                                <li class="mega-menu__item" role="menuitem">
+                                                    <a class="js-mega-menu-link" tabindex="-1" href="#">Item 5</a>
+                                                </li>
+                                                <li class="mega-menu__item" role="menuitem">
+                                                    <a class="js-mega-menu-link" tabindex="-1" href="#">Item 6</a>
+                                                </li>
+                                            </ul>
+                                            
+                                        </div>
+                                    </li>
+                                    <li class="mega-menu-list-item">
+                                        <button class="mega-menu-button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="mega-menu-popup-2">Menu 2</button>
+                                        <div class="mega-menu-popup" id="mega-menu-popup-2">
+                                            <ul role="menu">
+                                                <li class="mega-menu__item" role="menuitem">
+                                                    <a class="js-mega-menu-link" tabindex="-1" href="#">Item A</a>
+                                                </li>
+                                                <li class="mega-menu__item" role="menuitem">
+                                                    <a class="js-mega-menu-link" tabindex="-1" href="#">Item B</a>
+                                                </li>
+                                                <li class="mega-menu__item" role="menuitem">
+                                                    <a class="js-mega-menu-link" tabindex="-1" href="#">Item C</a>
+                                                </li>
+                                            </ul>
+                    
+                                            <ul role="menu">
+                                                <li class="mega-menu__item" role="menuitem">
+                                                    <a class="js-mega-menu-link" tabindex="-1" href="#">Item D</a>
+                                                </li>
+                                                <li class="mega-menu__item" role="menuitem">
+                                                    <a class="js-mega-menu-link" tabindex="-1" href="#">Item E</a>
+                                                </li>
+                                                <li class="mega-menu__item" role="menuitem">
+                                                    <a class="js-mega-menu-link" tabindex="-1" href="#">Item F</a>
+                                                </li>
+                                            </ul>
+                                            
+                                        </div>
+                                    </li>
+                                </ul>
+                                
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            #button {
+                position: fixed;
+                bottom: 24px;
+                left: 24px;
+            }
+        </style>
+        <button id="button">Menu</button>
+        <script>
+            document.querySelector('#button').addEventListener('click', () => {
+                document.querySelector('.js-header-nav').classList.toggle('header-nav-open')
+            })
+        </script>
+
+        <!-- <nav class="mega-menu">
             <ul>
                 <li>
-                    <button class="mega-menu__button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="mega-menu-popup-1">Menu 1</button>
+                    <button class="mega-menu-button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="mega-menu-popup-1">Menu 1</button>
                     <div class="mega-menu-popup" id="mega-menu-popup-1">
                         <ul role="menu">
                             <li class="mega-menu__item" role="menuitem">
@@ -295,7 +466,7 @@
                     </div>
                 </li>
                 <li>
-                    <button class="mega-menu__button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="mega-menu-popup-2">Menu 2</button>
+                    <button class="mega-menu-button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="mega-menu-popup-2">Menu 2</button>
                     <div class="mega-menu-popup" id="mega-menu-popup-2">
                         <ul role="menu">
                             <li class="mega-menu__item" role="menuitem">
@@ -325,7 +496,7 @@
                 </li>
             </ul>
             
-        </nav>
+        </nav> -->
 
     </body>
 </html>
