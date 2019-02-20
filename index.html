@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width,initial-scale=1">
-        <title>Application Menu - Example</title>
+        <title>Accessible Mega Menu</title>
         
 
         <style>
@@ -14,6 +14,7 @@
                 padding: 0;
                 margin: 0 0 24px 0;
             }
+
             li {
                 margin-bottom: 6px;
             }
@@ -30,14 +31,14 @@
                 text-decoration: none;
             }
 
-            .mega-menu-body {
+            .mega-menu-popup {
                 padding: 24px;
                 background: #5b007d;
                 color: white;
                 display: none;
             }
 
-            .mega-menu-body-open{
+            .mega-menu-popup-open{
                 display: block;
             }
 
@@ -46,9 +47,9 @@
         <script>
 
             class MegaMenu {
-                constructor(header, body) {
-                    this.header = header;
-                    this.buttons = menu.querySelectorAll('.mega-menu__button')
+                constructor(container) {
+                    this.container = container;
+                    this.buttons = container.querySelectorAll('.mega-menu__button')
                     this.bindButtonsClick()
                     this.bindDocumentClick()
                     this.bindKeyPress()
@@ -57,47 +58,41 @@
                 // Closes menu if click outside it.
                 onDocumentClick( event ) {
                     const target = event.target                    
-                    if (this.header !== target && !this.header.contains(target)) {
+                    if (this.container !== target && !this.container.contains(target)) {
                         this.setExpandAll(false)
                         this.closeAll()
                     }
                 }
 
                 onKeyUp() {
-                    console.log('keyUp()');
                     this.setFocus('previous')  
                 }
 
                 onKeyDown() {
-                    console.log('keydDown()'); 
                     this.setFocus('next')  
                     this.ensureFocus()
                 }
 
                 onKeyRight() {
-                    console.log('keydRight()');   
                     this.setFocusGroup('next')
                 }
 
                 onKeyLeft() {
-                    console.log('keydLeft()');   
                     this.setFocusGroup('previous')
                 }
 
                 onKeyEsc() {
-                    console.log('keyEsc()');   
                     this.setExpandAll(false)
                     this.closeAll()
                 }
 
                 getExpandedButton() {
-                    
                     return Array.from(this.buttons).filter( button => button.getAttribute('aria-expanded') === 'true')[0]
                 }
 
                 getPopup(button) {
                     const item = button.closest('li')
-                    const popup = item.querySelector('.mega-menu-body')
+                    const popup = item.querySelector('.mega-menu-popup')
                     return popup
                 }
 
@@ -138,7 +133,6 @@
                         return
                     }
                     const parentLi = link.closest('li')
-                    // const nextLi = parentLi.nextElementSibling
                     const nextLi = direction === 'previous' ? parentLi.previousElementSibling :  parentLi.nextElementSibling
                     if(nextLi){
                         nextLi.querySelector('a').focus()
@@ -178,7 +172,6 @@
                 }
 
                 onButtonClick( event ) {
-                    console.log('onButtonClick()');
                     const button = event.target
                     const isPressed = button.getAttribute('aria-expanded') === 'true';
                     const isOtherPressed = !!Array.from(this.buttons).filter( b => b.getAttribute('aria-expanded') === 'true').length
@@ -232,17 +225,14 @@
                 }
 
                 open(popup) {
-                    console.log('open()');
-                    popup.classList.add('mega-menu-body-open')
+                    popup.classList.add('mega-menu-popup-open')
                 }
 
                 close(popup) {
-                    console.log('close()');
-                    popup.classList.remove('mega-menu-body-open')
+                    popup.classList.remove('mega-menu-popup-open')
                 }
 
                 closeAll() {
-                    console.log('closeAll()');
                     this.buttons.forEach( button => {
                         const popup = this.getPopup(button)
                         this.close(popup)
@@ -251,8 +241,8 @@
             }
 
             function init() {
-                const menuHeader = document.querySelector('.mega-menu-header');
-                new MegaMenu(menuHeader)
+                const megaMenu = document.querySelector('.mega-menu');
+                new MegaMenu(megaMenu)
             }
 
             document.addEventListener('DOMContentLoaded', function(event) {
@@ -264,11 +254,11 @@
 
     </head>
     <body>
-        <nav class="mega-menu-header">
+        <nav class="mega-menu">
             <ul>
                 <li>
-                    <button class="mega-menu__button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="mega-menu-body-1">Menu 1</button>
-                    <div class="mega-menu-body" id="mega-menu-body-1">
+                    <button class="mega-menu__button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="mega-menu-popup-1">Menu 1</button>
+                    <div class="mega-menu-popup" id="mega-menu-popup-1">
                         <ul role="menu">
                             <li class="mega-menu__item" role="menuitem">
                                 <a class="mega-menu__link" tabindex="-1" href="#">Item 1</a>
@@ -283,22 +273,22 @@
 
                         <ul role="menu">
                             <li class="mega-menu__item" role="menuitem">
-                                <a class="mega-menu__link" tabindex="-1" href="#">Item 1</a>
+                                <a class="mega-menu__link" tabindex="-1" href="#">Item 4</a>
                             </li>
                             <li class="mega-menu__item" role="menuitem">
-                                <a class="mega-menu__link" tabindex="-1" href="#">Item 2</a>
+                                <a class="mega-menu__link" tabindex="-1" href="#">Item 5</a>
                             </li>
                             <li class="mega-menu__item" role="menuitem">
-                                <a class="mega-menu__link" tabindex="-1" href="#">Item 3</a>
+                                <a class="mega-menu__link" tabindex="-1" href="#">Item 6</a>
                             </li>
                         </ul>
                         
                     </div>
                 </li>
                 <li>
-                    <button class="mega-menu__button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="menu-2">Menu 2</button>
-                    <div class="mega-menu-body">
-                        <ul id="menu-2" role="menu">
+                    <button class="mega-menu__button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="mega-menu-popup-1">Menu 2</button>
+                    <div class="mega-menu-popup" id="mega-menu-popup-2">
+                        <ul role="menu">
                             <li class="mega-menu__item" role="menuitem">
                                 <a class="mega-menu__link" tabindex="-1" href="#">Item A</a>
                             </li>
@@ -309,34 +299,24 @@
                                 <a class="mega-menu__link" tabindex="-1" href="#">Item C</a>
                             </li>
                         </ul>
+
+                        <ul role="menu">
+                            <li class="mega-menu__item" role="menuitem">
+                                <a class="mega-menu__link" tabindex="-1" href="#">Item D</a>
+                            </li>
+                            <li class="mega-menu__item" role="menuitem">
+                                <a class="mega-menu__link" tabindex="-1" href="#">Item E</a>
+                            </li>
+                            <li class="mega-menu__item" role="menuitem">
+                                <a class="mega-menu__link" tabindex="-1" href="#">Item F</a>
+                            </li>
+                        </ul>
+                        
                     </div>
                 </li>
             </ul>
             
         </nav>
 
-
-        <script>
-            // Custom behaviour.
-            var menu = document.querySelector('.mega-menu-header');
-            menu.addEventListener('press.mega-menu', function () {
-                console.log('Menu button pressed');
-            });
-            menu.addEventListener('unpress.mega-menu', function () {
-                console.log('Menu button unpressed');
-            });
-            menu.addEventListener('expand.mega-menu', function () {
-                console.log('Menu expanded');
-            });
-            menu.addEventListener('contract.mega-menu', function () {
-                console.log('Menu contracted');
-            });
-            menu.addEventListener('open.mega-menu', function () {
-                console.log('Menu opened');
-            });
-            menu.addEventListener('close.mega-menu', function () {
-                console.log('Menu closed');
-            });
-        </script>
     </body>
 </html>
