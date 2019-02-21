@@ -180,14 +180,6 @@
 
                 
             }
-
-
-
-            
-            
-            
-
-            
             
 
         </style>
@@ -197,10 +189,16 @@
             class MegaMenu {
                 constructor(container) {
                     this.container = container;
+                    this.levels = container.querySelectorAll('.mega-menu-level')
                     this.buttons = container.querySelectorAll('.mega-menu-button')
+                    // change to container once placed correctly
+                    this.mobileToggle = document.querySelector('.js-mega-menu-mobile-toggle')
+                    this.headerNav = document.querySelector('.js-header-nav')
                     this.bindButtonsClick()
+                    this.bindMobileToggleClick()
                     this.bindDocumentClick()
                     this.bindKeyPress()
+                    
                 }
                 
                 // Closes menu if click outside it.
@@ -342,6 +340,19 @@
                     
                     parentListItem.querySelector('.mega-menu-level').classList.add('mega-menu-level-active')
                 }
+
+                onMobileToggleClick( event ) {
+                    const button = event.target
+                    const isPressed = button.getAttribute('aria-expanded') === 'true';
+                    if(isPressed){
+                        button.setAttribute('aria-expanded', false);
+                        this.mobileClose()
+                    }
+                    else {
+                        button.setAttribute('aria-expanded', true);
+                        this.mobileOpen()
+                    }
+                }
                 
                 // Automatically close menus when the user clicks away.
                 bindDocumentClick() {
@@ -352,6 +363,10 @@
                     this.buttons.forEach( button => {
                         button.addEventListener( 'click', this.onButtonClick.bind(this) );
                     })
+                }
+
+                bindMobileToggleClick() {
+                    this.mobileToggle.addEventListener( 'click', this.onMobileToggleClick.bind(this) );
                 }
 
                 bindKeyPress(){
@@ -388,6 +403,20 @@
 
                 close(popup) {
                     popup.classList.remove('mega-menu-popup-open')
+                }
+
+
+                mobileOpen() {
+                    this.headerNav.classList.add('header-nav-open')
+                }
+
+                mobileClose() {
+                    this.headerNav.classList.remove('header-nav-open')
+
+                    // wait for animation done bofore removing
+                    this.levels.forEach( level => {
+                        level.classList.remove('mega-menu-level-active')
+                    })
                 }
 
                 closeAll() {
@@ -554,12 +583,11 @@
                 left: 124px;
             }
         </style>
-        <button id="button">Menu</button>
-        <button id="button2">close</button>
+        <button id="button" class="js-mega-menu-mobile-toggle">Menu</button>
         <script>
-            document.querySelector('#button').addEventListener('click', () => {
-                document.querySelector('.js-header-nav').classList.toggle('header-nav-open')
-            })
+            // document.querySelector('#button').addEventListener('click', () => {
+            //     document.querySelector('.js-header-nav').classList.toggle('header-nav-open')
+            // })
         </script>
 
     </body>
