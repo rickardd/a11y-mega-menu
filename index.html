@@ -50,11 +50,30 @@
                 transition: 300ms transform ease;
             }
 
+            .mega-menu-mobile-header {
+                padding: 24px;
+                background: #fff;
+            }
+
+            .mega-menu{
+                position: relative;
+            }
+
+            .mega-menu-button {
+                background: #eee;
+                border: none;
+                display: block;
+                width: 100%;
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #aaa;
+            }
+
             .mega-menu-popup {
                 position: fixed;
                 right: -100%;
                 background: #555;
-                padding: 24px;
+                padding: 0;
                 top: 0;
                 min-height: 100vh;
                 width: 100vw;
@@ -62,6 +81,15 @@
 
             .mega-menu-popup-open {
                 z-index: 100;
+            }
+
+            .mega-menu-level {
+                transform: translateX(0);
+                transition: 300ms transform ease;
+                position: absolute;
+                right: -100%;
+                height: 100vh;
+                width: 100vw;
             }
 
             .mega-menu-level-2-link {
@@ -79,16 +107,6 @@
                 top: 0;
                 bottom: 0;
                 padding: 24px;
-            }
-
-
-            .mega-menu-level {
-                transform: translateX(0);
-                transition: 300ms transform ease;
-                position: fixed;
-                right: -100%;
-                height: 100vh;
-                width: 100vw;
             }
 
             .mega-menu-level-active {
@@ -111,8 +129,12 @@
                     transition: none;
                 }
 
-                .mega-menu {
+                .mega-menu-mobile-header {
+                    display: none;
+                }
 
+                .mega-menu {
+                    position: static;
                 }
 
                 .mega-menu-list {
@@ -151,6 +173,7 @@
                     color: white;
                     display: none;
                     min-height: 0;
+                    padding: 24px;
                 }
 
                 .mega-menu-popup-open {
@@ -191,10 +214,12 @@
                     this.levels = container.querySelectorAll('.mega-menu-level')
                     this.buttons = container.querySelectorAll('.mega-menu-button')
                     // change to container once placed correctly
-                    this.mobileToggle = document.querySelector('.js-mega-menu-mobile-toggle')
+                    this.mobileToggleButton = document.querySelector('.js-mega-menu-mobile-toggle')
+                    this.mobileCloseButton = document.querySelector('.js-mega-menu-mobile-close')
                     this.headerNav = document.querySelector('.js-header-nav')
                     this.bindButtonsClick()
-                    this.bindMobileToggleClick()
+                    this.bindMobileToggleButtonClick()
+                    this.bindMobileCloseButtonClick()
                     this.bindDocumentClick()
                     this.bindKeyPress()
                     
@@ -340,7 +365,7 @@
                     parentListItem.querySelector('.mega-menu-level').classList.add('mega-menu-level-active')
                 }
 
-                onMobileToggleClick( event ) {
+                onMobileToggleButtonClick( event ) {
                     const button = event.target
                     const isPressed = button.getAttribute('aria-expanded') === 'true';
                     if(isPressed){
@@ -351,6 +376,11 @@
                         button.setAttribute('aria-expanded', true);
                         this.mobileOpen()
                     }
+                }
+
+                onMobileCloseButtonClick( event ) {
+                    this.mobileClose()
+                    this.mobileToggleButton.setAttribute('aria-expanded', false);
                 }
                 
                 // Automatically close menus when the user clicks away.
@@ -364,8 +394,12 @@
                     })
                 }
 
-                bindMobileToggleClick() {
-                    this.mobileToggle.addEventListener( 'click', this.onMobileToggleClick.bind(this) );
+                bindMobileToggleButtonClick() {
+                    this.mobileToggleButton.addEventListener( 'click', this.onMobileToggleButtonClick.bind(this) );
+                }
+
+                bindMobileCloseButtonClick() {
+                    this.mobileCloseButton.addEventListener( 'click', this.onMobileCloseButtonClick.bind(this) );
                 }
 
                 bindKeyPress(){
@@ -475,7 +509,11 @@
                 <div class="col-md-9 bg-2 position-static">
                     <div class="header-nav js-header-nav">
                         <div class="mb-12 bg-3">
-                            Small links
+                            Maps | Careers | Contact
+                        </div>
+                        <div class="mega-menu-mobile-header">
+                            <input type="search" class="hidden-md" placeholder="Search">
+                            <button class="js-mega-menu-mobile-close">Menu</button>
                         </div>
                         <div class="mb-12 bg-4">
                             <nav class="mega-menu">
