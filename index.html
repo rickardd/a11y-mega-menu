@@ -414,10 +414,21 @@
                     if(!link){
                         return
                     }
-                    const parentLi = link.closest('li')
-                    const nextLi = direction === 'previous' ? parentLi.previousElementSibling :  parentLi.nextElementSibling
-                    if(nextLi){
-                        nextLi.querySelector('.js-mega-menu-link').focus()
+                    const parentGroup = link.closest('.js-mega-menu-group')
+                    const links = Array.from(parentGroup.querySelectorAll('.js-mega-menu-link'))
+                    let nextIndex = -1;
+                    links.forEach((l, i) => {
+                        if(l === link){
+                            if(direction === 'previous'){
+                                nextIndex = i - 1 
+                            }
+                            else{
+                                nextIndex = i + 1
+                            }
+                        }
+                    })
+                    if(links[nextIndex]) {
+                        links[nextIndex].focus()
                     }
                     else{
                         if( direction === 'previous' ) {
@@ -434,17 +445,16 @@
                     if(!link){
                         return
                     }
-                    const parentUl = link.closest('ul')
-                    
-                    const nextUl = direction === 'previous' ? parentUl.previousElementSibling :  parentUl.nextElementSibling
-                    if(nextUl){
+                    const parentGroup = link.closest('.js-mega-menu-group')
+                    const nextGroup = direction === 'previous' ? parentGroup.previousElementSibling :  parentGroup.nextElementSibling
+                    if(nextGroup){
                         if( startingPoint === 'last') {
-                            const lis = nextUl.querySelectorAll('li')
+                            const lis = nextGroup.querySelectorAll('li')
                             const lastLi = lis[lis.length -1]
                             lastLi.querySelector('.js-mega-menu-link').focus()
                         }
                         else{
-                            nextUl.querySelector('li .js-mega-menu-link').focus()
+                            nextGroup.querySelector('li .js-mega-menu-link').focus()
                         }
                     }
                 }
@@ -657,10 +667,10 @@
                                         <div class="mega-menu-level mega-menu-level-2 mega-menu-popup" id="mega-menu-popup-1">
                                             
                                             <div class="mega-menu-popup-left">
-                                                <div class="mega-menu-list-item">
+                                                <div class="mega-menu-list-item js-mega-menu-group">
                                                     <div class="mega-menu-list-header">
                                                         <h1 class="h3 mega-menu-level-2-link">
-                                                            <a href="" class="">Title 1 link</a>
+                                                            <a href="#" class="js-mega-menu-link" tabindex="-1">Title 1 link</a>
                                                         </h1>
                                                         <button class="js-mega-menu-button-back-nav mega-menu-button-back-nav">Back</button>
                                                         <button class="mega-menu-button mega-menu-level-2-button">Level 2 Button</button>
@@ -683,10 +693,10 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="mega-menu-list-item">
+                                                <div class="mega-menu-list-item js-mega-menu-group">
                                                     <div class="mega-menu-list-header">
                                                         <h1 class="h3 mega-menu-level-2-link">
-                                                            <a href="" class="">Title 2 link</a>
+                                                            <a href="#" class="js-mega-menu-link" tabindex="-1">Title 2 link</a>
                                                         </h1>
                                                     </div>
                                                     <button class="mega-menu-button mega-menu-level-2-button">Level 2 Button</button>
