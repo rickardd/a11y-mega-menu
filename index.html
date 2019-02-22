@@ -37,8 +37,8 @@
             .header-nav {
                 position: fixed;
                 width: 100vw;
-                /* max-width: 400px; */
                 right: 0;
+                top: 0;
                 transform: translateX(100%);
                 transition: 300ms transform ease;
                 min-height: 100vh;
@@ -48,6 +48,10 @@
             .header-nav-open {
                 transform: translateX(0);
                 transition: 300ms transform ease;
+            }
+
+            .header-nav-utilities {
+                display: none;
             }
 
             .mega-menu-mobile-header {
@@ -116,6 +120,22 @@
                 margin-bottom: 0;
             }
 
+            .mega-menu-mobile-utility-nav{
+                background: #aaa;
+                padding: 24px;
+                color: #666;
+
+            }
+            .mega-menu-mobile-utility-nav-list{
+                
+            }
+            .mega-menu-mobile-utility-nav-list-item{
+                
+            }
+            .mega-menu-mobile-utility-nav-link{
+                
+            }
+
 
             
             /* DESKTOP */
@@ -129,6 +149,10 @@
                     min-height: 0;
                     transform: none;
                     transition: none;
+                }
+
+                .header-nav-utilities {
+                    display: block;
                 }
 
                 .mega-menu-mobile-header {
@@ -210,6 +234,11 @@
                     background: none;
                     border: none;
                     padding: 0;
+                    display: inline;
+                }
+
+                .mega-menu-mobile-utility-nav{
+                    display: none;
                 }
                 
             }
@@ -519,7 +548,7 @@
                 </div>
                 <div class="col-md-9 bg-2 position-static">
                     <div class="header-nav js-header-nav">
-                        <div class="mb-12 bg-3">
+                        <div class="mb-12 bg-3 header-nav-utilities">
                             Maps | Careers | Contact
                         </div>
                         <div class="mega-menu-mobile-header">
@@ -611,6 +640,20 @@
                                         </div>
                                     </li>
                                 </ul>
+
+                                <div class="mega-menu-mobile-utility-nav">
+                                    <ul class="mega-menu-mobile-utility-nav-list">
+                                        <li class="mega-menu-mobile-utility-nav-list-item">
+                                            <a href="" class="mega-menu-mobile-utility-nav-link">Maps</a>
+                                        </li>
+                                        <li class="mega-menu-mobile-utility-nav-list-item">
+                                            <a href="" class="mega-menu-mobile-utility-nav-link">Careers</a>
+                                        </li>
+                                        <li class="mega-menu-mobile-utility-nav-list-item">
+                                            <a href="" class="mega-menu-mobile-utility-nav-link">Contact</a>
+                                        </li>
+                                    </ul>
+                                </div>
                                 
                             </nav>
                         </div>
