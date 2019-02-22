@@ -22,10 +22,6 @@
 
             
 
-            a {
-                color: #fff;
-                text-decoration: none;
-            }
 
             .header {
                 position: relative;
@@ -48,6 +44,10 @@
             .header-nav-open {
                 transform: translateX(0);
                 transition: 300ms transform ease;
+            }
+
+            .header-nav a {
+                text-decoration: none;
             }
 
             .header-nav-mobile {
@@ -207,8 +207,8 @@
                 }
 
                 .mega-menu-button[aria-expanded="true"] {
-                    background-color: #fff;
-                    color: #666;
+                    color: purple;
+                    outline: 0;
                 }
 
                 .mega-menu-button-back-nav {
@@ -241,6 +241,9 @@
 
                 .mega-menu-popup-right {
                     display: block;
+                    min-width: 220px;
+                    border-left: 1px solid purple;
+                    padding-left: 24px;
                 }
 
                 .mega-menu-popup-open {
@@ -253,8 +256,29 @@
                     height: auto;                
                 }
 
+                .mega-menu-level-1-button {
+                    background: no-repeat;
+                    border: 0;
+                    color: gray;
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                }
+
+                .mega-menu-level-1-button:focus {
+                    outline: 0;
+                    background: white;
+                }
+                .mega-menu-level-1-button[aria-expanded="true"] {
+                    background: white;
+                }
+
                 .mega-menu-level-2-link {
                     display: inline-block;
+                    font-size: 1.3rem;
+                }
+                
+                .mega-menu-level-2-link a {
+                    color: black;
                 }
 
                 .mega-menu-level-2-button {
@@ -266,6 +290,8 @@
                     padding: 0;
                     display: inline-block;
                 }
+
+                
 
                 .mega-menu-list-item {
                     margin-bottom: 6px;
@@ -281,6 +307,9 @@
                 .mega-menu-mobile-utility-nav{
                     display: none;
                 }
+
+
+                
                 
             }
             
@@ -597,7 +626,7 @@
 
         </style>
 
-        <div class="container-fluid header bg-5">
+        <header class="container-fluid header bg-5">
             <div class="row">
                 <div class="col-6 col-md-3 bg-1">
                     <div class="bg-6">
@@ -623,7 +652,7 @@
                                 <!-- LEVEL 1 -->
                                 <ul class="mega-menu-list">
                                     <li class="mega-menu-list-item">
-                                        <button class="mega-menu-button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="mega-menu-popup-1">Level 1 Button</button>
+                                        <button class="mega-menu-button mega-menu-level-1-button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="mega-menu-popup-1">Level 1 Button</button>
                                         <!-- LEVEL 2 -->
                                         <div class="mega-menu-level mega-menu-level-2 mega-menu-popup" id="mega-menu-popup-1">
                                             
@@ -684,7 +713,7 @@
                                         </div>
                                     </li>
                                     <li class="mega-menu-list-item">
-                                        <button class="mega-menu-button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="mega-menu-popup-2">Level 1 Button</button>
+                                        <button class="mega-menu-button mega-menu-level-1-button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="mega-menu-popup-2">Level 1 Button</button>
                                         <div class="mega-menu-level mega-menu-level-2 mega-menu-popup" id="mega-menu-popup-2">
                                             <ul role="menu">
                                                 <li class="mega-menu-list-item" role="menuitem">
@@ -733,7 +762,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </header>
 
     </body>
 </html>
