@@ -102,6 +102,10 @@
                 z-index: 100;
             }
 
+            .mega-menu-popup-right {
+                display: none;
+            }
+
             .mega-menu-level {
                 transform: translateX(0);
                 transition: 300ms transform ease;
@@ -228,10 +232,19 @@
                     display: none;
                     min-height: 0;
                     padding: 24px;
+                    justify-content: space-between;
+                }
+
+                .mega-menu-popup-left {
+                    display: flex;
+                }
+
+                .mega-menu-popup-right {
+                    display: block;
                 }
 
                 .mega-menu-popup-open {
-                    display: block;
+                    display: flex;
                 }
 
                 .mega-menu-level {
@@ -613,53 +626,59 @@
                                         <button class="mega-menu-button" aria-pressed="false" aria-haspopup="true" aria-expanded="false" aria-controls="mega-menu-popup-1">Level 1 Button</button>
                                         <!-- LEVEL 2 -->
                                         <div class="mega-menu-level mega-menu-level-2 mega-menu-popup" id="mega-menu-popup-1">
-                                            <div class="mega-menu-list-item">
-                                                <div class="mega-menu-list-header">
-                                                    <h1 class="h3 mega-menu-level-2-link">
-                                                        <a href="" class="">Title 1 link</a>
-                                                    </h1>
-                                                    <button class="js-mega-menu-button-back-nav mega-menu-button-back-nav">Back</button>
-                                                    <button class="mega-menu-button mega-menu-level-2-button">Level 2 Button</button>
+                                            
+                                            <div class="mega-menu-popup-left">
+                                                <div class="mega-menu-list-item">
+                                                    <div class="mega-menu-list-header">
+                                                        <h1 class="h3 mega-menu-level-2-link">
+                                                            <a href="" class="">Title 1 link</a>
+                                                        </h1>
+                                                        <button class="js-mega-menu-button-back-nav mega-menu-button-back-nav">Back</button>
+                                                        <button class="mega-menu-button mega-menu-level-2-button">Level 2 Button</button>
+                                                    </div>
+                                                    <!-- LEVEL 3 -->
+                                                    <div class="mega-menu-level mega-menu-level-3">
+                                                        <ul role="menu">
+                                                            <li class="mega-menu-list-item" role="menuitem">
+                                                                <button class="js-mega-menu-button-back-nav mega-menu-button-back-nav">Back</button>
+                                                            </li>
+                                                            <li class="mega-menu-list-item" role="menuitem">
+                                                                <a class="js-mega-menu-link mega-menu-link" tabindex="-1" href="#">Level 3 Link (1)</a>
+                                                            </li>
+                                                            <li class="mega-menu-list-item" role="menuitem">
+                                                                <a class="js-mega-menu-link mega-menu-link" tabindex="-1" href="#">Level 3 Link (2)</a>
+                                                            </li>
+                                                            <li class="mega-menu-list-item" role="menuitem">
+                                                                <a class="js-mega-menu-link mega-menu-link" tabindex="-1" href="#">Level 3 Link (3)</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                                <!-- LEVEL 3 -->
-                                                <div class="mega-menu-level mega-menu-level-3">
-                                                    <ul role="menu">
-                                                        <li class="mega-menu-list-item" role="menuitem">
-                                                            <button class="js-mega-menu-button-back-nav mega-menu-button-back-nav">Back</button>
-                                                        </li>
-                                                        <li class="mega-menu-list-item" role="menuitem">
-                                                            <a class="js-mega-menu-link mega-menu-link" tabindex="-1" href="#">Level 3 Link (1)</a>
-                                                        </li>
-                                                        <li class="mega-menu-list-item" role="menuitem">
-                                                            <a class="js-mega-menu-link mega-menu-link" tabindex="-1" href="#">Level 3 Link (2)</a>
-                                                        </li>
-                                                        <li class="mega-menu-list-item" role="menuitem">
-                                                            <a class="js-mega-menu-link mega-menu-link" tabindex="-1" href="#">Level 3 Link (3)</a>
-                                                        </li>
-                                                    </ul>
+                                                <div class="mega-menu-list-item">
+                                                    <div class="mega-menu-list-header">
+                                                        <h1 class="h3 mega-menu-level-2-link">
+                                                            <a href="" class="">Title 2 link</a>
+                                                        </h1>
+                                                    </div>
+                                                    <button class="mega-menu-button mega-menu-level-2-button">Level 2 Button</button>
+                                                    <div class="mega-menu-level mega-menu-level-3">
+                                                        <ul role="menu">
+                                                            <li class="mega-menu-list-item" role="menuitem">
+                                                                <a class="js-mega-menu-link mega-menu-link" tabindex="-1" href="#">Level 3 Link (4)</a>
+                                                            </li>
+                                                            <li class="mega-menu-list-item" role="menuitem">
+                                                                <a class="js-mega-menu-link mega-menu-link" tabindex="-1" href="#">Level 3 Link (5)</a>
+                                                            </li>
+                                                            <li class="mega-menu-list-item" role="menuitem">
+                                                                <a class="js-mega-menu-link mega-menu-link" tabindex="-1" href="#">Level 3 Link (6)</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            
-                                            <div class="mega-menu-list-item">
-                                                <div class="mega-menu-list-header">
-                                                    <h1 class="h3 mega-menu-level-2-link">
-                                                        <a href="" class="">Title 2 link</a>
-                                                    </h1>
-                                                </div>
-                                                <button class="mega-menu-button mega-menu-level-2-button">Level 2 Button</button>
-                                                <div class="mega-menu-level mega-menu-level-3">
-                                                    <ul role="menu">
-                                                        <li class="mega-menu-list-item" role="menuitem">
-                                                            <a class="js-mega-menu-link mega-menu-link" tabindex="-1" href="#">Level 3 Link (4)</a>
-                                                        </li>
-                                                        <li class="mega-menu-list-item" role="menuitem">
-                                                            <a class="js-mega-menu-link mega-menu-link" tabindex="-1" href="#">Level 3 Link (5)</a>
-                                                        </li>
-                                                        <li class="mega-menu-list-item" role="menuitem">
-                                                            <a class="js-mega-menu-link mega-menu-link" tabindex="-1" href="#">Level 3 Link (6)</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+
+                                            <div class="mega-menu-popup-right">
+                                                Side content                                                
                                             </div>
 
                                         </div>
