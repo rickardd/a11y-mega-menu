@@ -50,6 +50,14 @@
                 transition: 300ms transform ease;
             }
 
+            .header-nav-mobile {
+                display: block;
+            }
+
+            .header-nav-desktop {
+                display: none;
+            }
+
             .header-nav-utilities {
                 display: none;
             }
@@ -62,7 +70,8 @@
             .mega-menu{
                 position: relative;
             }
-
+            
+            .mega-menu-button-back-nav,
             .mega-menu-link,
             .mega-menu-button {
                 background: #eee;
@@ -73,6 +82,10 @@
                 text-align: left;
                 border-bottom: 1px solid #aaa;
                 color: black;
+            }
+
+            .mega-menu-button-back-nav {
+                background-color: #779cc3;
             }
 
             .mega-menu-popup {
@@ -120,18 +133,21 @@
                 margin-bottom: 0;
             }
 
-            .mega-menu-mobile-utility-nav{
+            .mega-menu-mobile-utility-nav {
                 background: #aaa;
                 padding: 24px;
                 color: #666;
 
             }
+
             .mega-menu-mobile-utility-nav-list{
                 
             }
+
             .mega-menu-mobile-utility-nav-list-item{
                 
             }
+            
             .mega-menu-mobile-utility-nav-link{
                 
             }
@@ -149,6 +165,14 @@
                     min-height: 0;
                     transform: none;
                     transition: none;
+                }
+
+                .header-nav-mobile {
+                    display: none;
+                }
+
+                .header-nav-desktop {
+                    display: block;
                 }
 
                 .header-nav-utilities {
@@ -181,6 +205,10 @@
                 .mega-menu-button[aria-expanded="true"] {
                     background-color: #fff;
                     color: #666;
+                }
+
+                .mega-menu-button-back-nav {
+                    display: none;
                 }
 
                 .mega-menu a:focus {
@@ -253,6 +281,7 @@
                     this.container = container;
                     this.levels = container.querySelectorAll('.mega-menu-level')
                     this.buttons = container.querySelectorAll('.mega-menu-button')
+                    this.backButtons = container.querySelectorAll('.mega-menu-button-back-nav')
                     // change to container once placed correctly
                     this.mobileToggleButton = document.querySelector('.js-mega-menu-mobile-toggle')
                     this.mobileCloseButton = document.querySelector('.js-mega-menu-mobile-close')
@@ -260,6 +289,7 @@
                     this.bindButtonsClick()
                     this.bindMobileToggleButtonClick()
                     this.bindMobileCloseButtonClick()
+                    this.bindMobileBackButtonClick()
                     this.bindDocumentClick()
                     this.bindKeyPress()
                     
@@ -422,6 +452,15 @@
                     this.mobileClose()
                     this.mobileToggleButton.setAttribute('aria-expanded', false);
                 }
+
+                onMobileBackButtonClick( event ) {
+                    const button = event.target
+                    const parentLevel = button.closest('.mega-menu-level')
+                    const grandParentLevel = parentLevel.parentElement.closest('.mega-menu-level')
+
+                    parentLevel.classList.remove('mega-menu-level-active')
+                    grandParentLevel.classList.add('mega-menu-level-active')
+                }
                 
                 // Automatically close menus when the user clicks away.
                 bindDocumentClick() {
@@ -440,6 +479,12 @@
 
                 bindMobileCloseButtonClick() {
                     this.mobileCloseButton.addEventListener( 'click', this.onMobileCloseButtonClick.bind(this) );
+                }
+                
+                bindMobileBackButtonClick() {
+                    this.backButtons.forEach( button => {
+                        button.addEventListener( 'click', this.onMobileBackButtonClick.bind(this) );
+                    })
                 }
 
                 bindKeyPress(){
@@ -541,19 +586,24 @@
 
         <div class="container-fluid header bg-5">
             <div class="row">
-                <div class="col-md-3 bg-1">
+                <div class="col-6 col-md-3 bg-1">
                     <div class="bg-6">
                         Logo
                     </div>
                 </div>
-                <div class="col-md-9 bg-2 position-static">
+                <div class="col-6 col-md-9 bg-2 position-static">
+                    <div class="header-nav-mobile">
+                        <button class="js-mega-menu-mobile-toggle">Open Menu</button>
+                    </div>
                     <div class="header-nav js-header-nav">
-                        <div class="mb-12 bg-3 header-nav-utilities">
-                            Maps | Careers | Contact
+                        <div class="header-nav-desktop">
+                            <div class="mb-12 bg-3 header-nav-utilities">
+                                Maps | Careers | Contact
+                            </div>
                         </div>
                         <div class="mega-menu-mobile-header">
                             <input type="search" class="hidden-md" placeholder="Search">
-                            <button class="js-mega-menu-mobile-close">Menu</button>
+                            <button class="js-mega-menu-mobile-close float-right">Close Menu</button>
                         </div>
                         <div class="mb-12 bg-4">
                             <nav class="mega-menu">
@@ -568,11 +618,15 @@
                                                     <h1 class="h3 mega-menu-level-2-link">
                                                         <a href="" class="">Title 1 link</a>
                                                     </h1>
+                                                    <button class="js-mega-menu-button-back-nav mega-menu-button-back-nav">Back</button>
                                                     <button class="mega-menu-button mega-menu-level-2-button">Level 2 Button</button>
                                                 </div>
                                                 <!-- LEVEL 3 -->
                                                 <div class="mega-menu-level mega-menu-level-3">
                                                     <ul role="menu">
+                                                        <li class="mega-menu-list-item" role="menuitem">
+                                                            <button class="js-mega-menu-button-back-nav mega-menu-button-back-nav">Back</button>
+                                                        </li>
                                                         <li class="mega-menu-list-item" role="menuitem">
                                                             <a class="js-mega-menu-link mega-menu-link" tabindex="-1" href="#">Level 3 Link (1)</a>
                                                         </li>
@@ -661,25 +715,6 @@
                 </div>
             </div>
         </div>
-
-        <style>
-            #button {
-                position: fixed;
-                bottom: 24px;
-                left: 24px;
-            }
-            #button2 {
-                position: fixed;
-                bottom: 24px;
-                left: 124px;
-            }
-        </style>
-        <button id="button" class="js-mega-menu-mobile-toggle">Menu</button>
-        <script>
-            // document.querySelector('#button').addEventListener('click', () => {
-            //     document.querySelector('.js-header-nav').classList.toggle('header-nav-open')
-            // })
-        </script>
 
     </body>
 </html>
